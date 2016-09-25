@@ -3,21 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 public class Dig : MonoBehaviour {
 
-    List<GameObject> desrtoy_stack;
-    int count = 0;
+    List<Vector3> desrtoy_stack;
+    int count = -1;
 
+    public  void set_primary(List<Vector3> desrtoy_stackk)
+    {
+        desrtoy_stack = new List<Vector3>(desrtoy_stackk);
+    }
     public Vector3 what_destroy_next()
     {
-
-
-
+        count++;  
         //просто возращаем местположение блока, который надо разрушить
         //мураш сам найдет путь, как дойдет, возмет блок и будет считать путь до склада.
-
-        return new Vector3(14,26,0);
+        return desrtoy_stack[count];
     }
 
+    void OnGUI()
+    {
 
+    }
 
 
 }

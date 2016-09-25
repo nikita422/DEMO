@@ -162,6 +162,12 @@ GameObject:
   - 114: {fileID: 1860696314}
   - 114: {fileID: 1860696317}
   - 114: {fileID: 1860696318}
+  - 114: {fileID: 1860696322}
+  - 114: {fileID: 1860696321}
+  - 114: {fileID: 1860696320}
+  - 114: {fileID: 1860696319}
+  - 114: {fileID: 1860696324}
+  - 114: {fileID: 1860696323}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -246,7 +252,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1860696307}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.33, y: 12.9, z: -1}
+  m_LocalPosition: {x: 19.33, y: 12.9, z: -4}
   m_LocalScale: {x: 0.33749944, y: 3.2081234, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -294,8 +300,9 @@ MonoBehaviour:
   - DIRT
   - ANT
   toolbarmode:
-  - CREATE
+  - debug
   - CHOOSE
+  - CREATE
   now_press: 0
   mouse_in_button: 0
   mousep: 
@@ -321,6 +328,79 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec0fedd3a3afc9944bfe5e1861c67273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860696319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa505eadc2042304cab9f2314b797226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860696320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1756daa0c53b54f8396a7a13ce4313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860696321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfec9b07b5dafeb4dbb233cf83984e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860696322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f977ee8c4c0e0940ae27ab5db4c4f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolbar_type_plan: 0
+  toolbartp:
+  - STORE
+  - DIGGING
+--- !u!114 &1860696323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479a370bd838730408c0b0d41bd67bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pref_green_zone: {fileID: 181088, guid: f1c51ad96065b9b4891e962792fb0bbd, type: 2}
+  pref_red_zone: {fileID: 150080, guid: d233c139d0c57124a84dabbc2b324e44, type: 2}
+  pref_selec_zone: {fileID: 169480, guid: bb39bf314d9c3994885e26ed791b0b85, type: 2}
+--- !u!114 &1860696324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860696307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb5fcbb342301a419eab51f8e68f3d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1944686385

@@ -6,29 +6,28 @@ public class GameCommaner : MonoBehaviour {
     public int toolbar_mode = 0;
     public int toolbar_block = 0;
     public string[] toolbarblock = new string[] {"DIRT", "ANT"};
-    public string[] toolbarmode = new string[] { "CREATE", "CHOOSE"};
-    
-   public bool now_press = false;
-   public bool mouse_in_button;
-   public string mousep;
+  public string[] toolbarmode = new string[] { "debug", "CHOOSE","CREATE"};
 
-    
+    Dig_c dig_c;
 
-    /*
-      */
+    public bool now_press = false;
+    public bool mouse_in_button;
+    public string mousep;
+    
+     
    map map_dirt;
    public int x;//14
    public int y;//40
   	void Start () {
         map_dirt = GetComponent<map>();
         GetComponent<UnitSelectionComponent>().set_active(false);
-        
+        dig_c = GetComponent<Dig_c>();
 	}
 	
 	
 	void Update () {
         mousep = Input.mousePosition.ToString();
-        if (Input.mousePosition.x < 220 && Input.mousePosition.y > 220)
+        if (Input.mousePosition.x < 260 && Input.mousePosition.y > 220)
         {
             
             mouse_in_button = true;
@@ -81,6 +80,14 @@ public class GameCommaner : MonoBehaviour {
               }
             }
         }
+        if (toolbar_mode == 2)//CREATE
+        {
+            dig_c.set_active(true);
+        }
+        else
+        {
+            dig_c.set_active(false);
+        }
 
         if (now_press)
         {
@@ -94,15 +101,15 @@ public class GameCommaner : MonoBehaviour {
 
     void OnGUI()
     {
-
-        toolbar_mode = GUI.Toolbar(new Rect(10, 20, 200, 40), toolbar_mode, toolbarmode);
+       
+    toolbar_mode = GUI.Toolbar(new Rect(10, 20, 240, 40), toolbar_mode, toolbarmode);
 
         if (toolbar_mode == 0)
         {
             toolbar_block = GUI.Toolbar(new Rect(10, 70, 150, 20), toolbar_block, toolbarblock);
         }
 
-        GUI.TextArea(new Rect(100, 100, 100, 100), mousep);
+       // GUI.TextArea(new Rect(100, 100, 100, 100), mousep);
     }
 
  
