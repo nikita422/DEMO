@@ -7,29 +7,26 @@ public class Select_zone : MonoBehaviour {
    public GameObject pref_red_zone;
    public GameObject pref_selec_zone;
    GameObject[,] go_dirt;
-
+   GameObject select_zone;//бегает за мышкой
    GameObject[,] go_zone;
+
    int[,] select_map;
- GameObject select_zone;
-   Camera camera;
-   bool active = false;
-   bool already_start = false;
-   bool begin_plan = false;
+   
+   public bool active = false; //используется для update
+   bool already_start = false;//для конструктора
+   bool begin_plan = false;// for btn OK and CANCEL 
    bool mouse_in_button = true;
-	void Start () {
-       
-	}
-	//выделение, подсветка и возвращение массива инт размеро с карту
+	 
     void one_start()
     {
+
+
         select_map = new int[14, 40];
         go_zone = new GameObject[14, 40];
         if (GetComponent<map>().get_hight_map() != null)
         {
             go_dirt = (GameObject.FindWithTag("MainCamera")).GetComponent<map>().get_hight_map();
-
         }
-
 
         for (int i = 0; i < 14; i++)
         {
@@ -50,9 +47,8 @@ public class Select_zone : MonoBehaviour {
 	void Update () {
         if(active){
             
-            if (Input.mousePosition.x < 260 && Input.mousePosition.y > 220)
+            if (Input.mousePosition.x < 260 && Input.mousePosition.y > 180)
             {
-
                 mouse_in_button = true;
             }
             else
@@ -65,9 +61,11 @@ public class Select_zone : MonoBehaviour {
 
             if (!already_start)
             {
-                one_start();
+                one_start();//КОНСТРУКТОР
                 already_start = true;
             }
+
+
             select_zone.transform.position = transform_vec(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (Input.GetMouseButtonDown(0) && !mouse_in_button)//create
             {
@@ -111,12 +109,20 @@ public class Select_zone : MonoBehaviour {
         {
             if (GUI.Button(new Rect(10, 100, 70, 30), "OK"))      //ЕСЛИ ПРИНИМААЕМ, ТО ОТПРАВЛЯЕМ СЕЛЕКТ МЭП НАВЕРХ, 
             {
+                active = false;
                 GetComponent<Dig_c>().create_new_dig(select_map);// можно еще отправить сюда геймобжекты чтобы выделялся склад
                 //все чистим
+                begin_plan = false;
+                active= false;
+                Destroy(select_zone);
             }
             if (GUI.Button(new Rect(86, 100, 70, 30), "CANCEL"))
             {
+                active = false;
                 //все чистим
+                begin_plan = false;
+                Destroy(select_zone);
+                
             }
              
           
@@ -125,6 +131,12 @@ public class Select_zone : MonoBehaviour {
 
     public void set_active(bool activee){
         active=activee;
+        if (activee == false)
+        {
+            already_start = false;
+            
+        }
+
     }
     public Vector3 transform_vec(Vector3 camera_vec)
     {

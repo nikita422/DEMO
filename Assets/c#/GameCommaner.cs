@@ -27,7 +27,7 @@ public class GameCommaner : MonoBehaviour {
 	
 	void Update () {
         mousep = Input.mousePosition.ToString();
-        if (Input.mousePosition.x < 260 && Input.mousePosition.y > 220)
+        if ((Input.mousePosition.x < 260 && Input.mousePosition.y > 290) || (Input.mousePosition.x < 60 && Input.mousePosition.y < 300))
         {
             
             mouse_in_button = true;
@@ -109,7 +109,7 @@ public class GameCommaner : MonoBehaviour {
             toolbar_block = GUI.Toolbar(new Rect(10, 70, 150, 20), toolbar_block, toolbarblock);
         }
 
-       // GUI.TextArea(new Rect(100, 100, 100, 100), mousep);
+       GUI.TextArea(new Rect(100, 100, 100, 100), mousep);
     }
 
  

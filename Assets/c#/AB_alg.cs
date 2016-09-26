@@ -44,10 +44,7 @@ public class AB_alg : MonoBehaviour{
         StartCoroutine(find_way(start_vec, end_vec, ant));
     }
 
-    public void test()
-    {
-        print("get_comp<ab>_OK!");
-    }
+    
     IEnumerator find_way(Vector3 start_vec, Vector3 end_vec, ant_brain ant)
     {
         GameObject[,] go_dirt = (GameObject.FindWithTag("MainCamera")).GetComponent<map>().get_hight_map();
@@ -83,21 +80,32 @@ public class AB_alg : MonoBehaviour{
 
             list_ghost.Add(new Ghost(x1, y1));
             do
-            {yield return null;
+            {
+                yield return null;
+
                 for (int count = 0; count < list_ghost.Count; count++)
                 {
+
+                     
+
+
 
                     yield return null;
                     if (list_ghost[count].now_x == x2 && list_ghost[count].now_y == y2)
                     {
-
                         ant.set_way(list_ghost[count].get_way());
                         yield break;
-                        
                     }
 
                     int x = list_ghost[count].now_x;
                     int y = list_ghost[count].now_y;
+                    if (x < 1 || x > 13 || y < 1 || y > 39)
+                    {
+                        list_ghost.RemoveAt(count);
+                        continue;
+                    }
+
+
                     //Debug.Log("i: " + count + " X:" + x + " Y:" + y);
                     hight_map[x, y] = 5;
                     int next_x = 0, next_y = 0;
@@ -165,9 +173,7 @@ public class AB_alg : MonoBehaviour{
                        // Debug.Log("3");
                         if (already_go)
                         {
-
                             list_ghost.Add(new Ghost(x + 1, y + 1, list_ghost[count].get_way(), new Vector3(1, -1)));
-
                         }
                         else
                         {
@@ -283,7 +289,10 @@ public class AB_alg : MonoBehaviour{
            
         }
 
-
+    public void test()
+    {
+        print("get_comp<ab>_OK!");
+    }
 
     }
 

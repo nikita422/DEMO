@@ -22,7 +22,6 @@ public class ant_brain : MonoBehaviour
        oldpos = transform.position;
        newpos = transform.position;
        now_move = false;
-        
    }
 
     void Update()
@@ -71,6 +70,10 @@ public class ant_brain : MonoBehaviour
         return int_vec;
     }
 
+    public void set_dig(Dig digg)
+    {
+        my_dig = digg;
+    }
 
 
     IEnumerator go()
