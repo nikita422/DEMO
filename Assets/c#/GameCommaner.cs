@@ -27,7 +27,7 @@ public class GameCommaner : MonoBehaviour {
 	
 	void Update () {
         mousep = Input.mousePosition.ToString();
-        if ((Input.mousePosition.x < 260 && Input.mousePosition.y > 290) || (Input.mousePosition.x < 60 && Input.mousePosition.y < 300))
+        if ((Input.mousePosition.x < 260 && Input.mousePosition.y > 230) || (Input.mousePosition.x < 60 && Input.mousePosition.y < 300))
         {
             
             mouse_in_button = true;

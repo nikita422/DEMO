@@ -41,7 +41,7 @@ public class map : MonoBehaviour {
 	}
      public  GameObject[,] get_hight_map()
     {
-        print("GET_HIGHT_MAP");
+         
         return go_dirt;
     }
     public void create_map(int hight, int lenght)

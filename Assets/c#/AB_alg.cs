@@ -74,10 +74,6 @@ public class AB_alg : MonoBehaviour{
             }
              yield return null;
 
-
-
-
-
             list_ghost.Add(new Ghost(x1, y1));
             do
             {
@@ -85,10 +81,6 @@ public class AB_alg : MonoBehaviour{
 
                 for (int count = 0; count < list_ghost.Count; count++)
                 {
-
-                     
-
-
 
                     yield return null;
                     if (list_ghost[count].now_x == x2 && list_ghost[count].now_y == y2)

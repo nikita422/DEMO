@@ -7,60 +7,101 @@ using System.Collections.Generic;
 public class ant_brain : MonoBehaviour
 {
     public float speed;
-    public Vector3 what_desrtoy;
+    bool stop_now=false;
+  
     public Dig my_dig;// стройка к которой будет приписан мураш
-    
-
     List<Vector3> way;// путь юнита
     Vector3  oldpos, newpos;
-    bool now_move;
-    bool b_if_way = false;
-    bool work;
-    bool is_digging=false;
+    bool now_move = false;
+   
+    bool is_work=false;
+
+    bool goo = false;
+    class Work
+    {
+        public string what_work;
+        public Vector3 position;
+        public Work(string name, Vector3 pos)
+        {
+            what_work = name; position = new Vector3(pos.x,pos.y,pos.z);
+        }
+     
+
+    }
+
+    List<Work> list_work;
+   
    void Start()
    {
+       list_work = new List<Work>();
        oldpos = transform.position;
        newpos = transform.position;
-       now_move = false;
    }
 
     void Update()
     {
-        if (b_if_way && !now_move)
+        if (!is_work)
         {
-            now_move = true;
-            StartCoroutine(go());
-        }
-        if (my_dig != null && !work)
-        {
-            b_if_way = true;
-            way = new List<Vector3>();
-            way.Add(my_dig.what_destroy_next());//пойдет к блоку на стройке
-            is_digging = true;
-        }
-        if (my_dig != null && is_digging  && !now_move)
-        {
-            //разрушить блок
-            //найти склад куда нести
-        }
+            if (list_work.Count != 0)
+            {
+                switch (list_work[list_work.Count - 1].what_work)
+                {
+                    case "go_to":
+                        {
+                            AB_alg ab = gameObject.AddComponent<AB_alg>();
+                            ab.where_to_go(transform_vec(transform.position), list_work[list_work.Count - 1].position, GetComponent<ant_brain>());
+                            is_work = true;
+                            goo = true;
+                            list_work.RemoveAt(list_work.Count - 1);
+                        }
+                        break;
+                    case "take":
+                        {
 
+                        }
+                        break;
+                    case "put":
+                        {
+
+                        }
+                        break;
+                }
+                                          
+            }
+            else
+            {
+            //if(my_dig!=null){
+               //сделать запрос к стройке что брать и куда нести
+               //верет вектор3: что взять, куда положить.
+            //if(my_job!=null){
+                // запрос к менеджеру работ
+            }
+        }
     }
      
     public void set_way(List<Vector3>wayy)
     {
-        b_if_way = true;
-
-        is_digging = false;//если вдруг выделили его и "сбили с пути"
-        my_dig = null;
-
-       // Debug.Log("ant_brain_set_way:"+ wayy.Count);
         way = new List<Vector3>(wayy);
+        if (goo)
+        {
+            goo = false;
+            StartCoroutine(go());
+        }
+
     }
+  
      
     public void go_to(Vector2 end_pos)
+    {    
+        list_work.Add(new Work("go_to", end_pos)); 
+    }
+    public void go_to_now(Vector2 end_pos)
     {
-        AB_alg ab = gameObject.AddComponent<AB_alg>();
-        ab.where_to_go(transform_vec(transform.position), end_pos, GetComponent<ant_brain>());
+        stop_now = true;
+        list_work.Clear();
+        list_work.Add(new Work("go_to", end_pos));
+        stop_now = false;
+        is_work = false;
     }
     public Vector3 transform_vec(Vector3 camera_vec)
     {
@@ -75,6 +116,7 @@ public class ant_brain : MonoBehaviour
         my_dig = digg;
     }
 
+ 
 
     IEnumerator go()
     {
@@ -87,17 +129,25 @@ public class ant_brain : MonoBehaviour
                     Debug.Log("stay");
                     break;
                 }
+                
                 transform.Translate(way[i] * speed * Time.deltaTime);
                 newpos = transform.position;
                 yield return null;
-                
+                 
             } while (Vector3.Distance(oldpos, newpos) < 1);
+            
             transform.position = oldpos + way[i];
             oldpos = transform.position;
+            if (stop_now)
+            {
+                is_work = false;
+                way.Clear();
+                yield break;
+            }
         }
-        now_move = false;
-        b_if_way = false;
-        way.Clear();
+        is_work = false;
+        way.Clear();               
+
     }
 }
 
