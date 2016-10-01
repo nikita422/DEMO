@@ -39,18 +39,19 @@ public class AB_alg : MonoBehaviour{
     bool go;
     int x1, y1, x2, y2;
 
-    public void where_to_go(Vector3 start_vec, Vector3 end_vec, ant_brain ant)
+    public void where_to_go(Vector3 start_vec, Vector3 end_vec, ant_brain ant, bool is_dig = false)
     {
-        StartCoroutine(find_way(start_vec, end_vec, ant));
+        StartCoroutine(find_way(start_vec, end_vec, ant,is_dig));
     }
 
     
-    IEnumerator find_way(Vector3 start_vec, Vector3 end_vec, ant_brain ant)
+    IEnumerator find_way(Vector3 start_vec, Vector3 end_vec, ant_brain ant, bool is_dig)
     {
         GameObject[,] go_dirt = (GameObject.FindWithTag("MainCamera")).GetComponent<map>().get_hight_map();
             go = true;
             hight_map = new int[14, 40];
             list_ghost = new List<Ghost>();
+
 
             x1 = (int)start_vec.x;
             y1 = (int)start_vec.y;
@@ -71,6 +72,10 @@ public class AB_alg : MonoBehaviour{
                         hight_map[i, j] = 1;
                     }
                 }
+            }
+            if (is_dig)
+            {
+                hight_map[x2, y2] = 0;
             }
              yield return null;
 

@@ -7,6 +7,7 @@ public class Wave_Alg : MonoBehaviour {
     int[,] dig_plan;
     List<Vector3> now_block;
     List<Vector3> what_desrtoy;
+
     int x, y;
 
     public void set_primary(int[,] plan)
@@ -14,6 +15,7 @@ public class Wave_Alg : MonoBehaviour {
         x = 14; y = 40;
         now_block = new List<Vector3>();
         what_desrtoy = new List<Vector3>();
+       
         dig_plan = new int[x, y];
         for (int i = 0; i < x; i++)
         {
@@ -35,7 +37,7 @@ public class Wave_Alg : MonoBehaviour {
         {
             return what_desrtoy;
         }
-
+      
 
        public void build_plan()
        {

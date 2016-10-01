@@ -57,7 +57,8 @@ public class ant_brain : MonoBehaviour
                         break;
                     case "take":
                         {
-
+                            //тут спросить куда положить(Склад)
+                            //добавить две работы, идти до склада и положить.
                         }
                         break;
                     case "put":
@@ -65,14 +66,31 @@ public class ant_brain : MonoBehaviour
 
                         }
                         break;
+                    case "go_to_dig"://разница из за разных компонентов AB 
+                        {
+                            AB_alg ab = gameObject.AddComponent<AB_alg>();
+                            ab.where_to_go(transform_vec(transform.position), list_work[list_work.Count - 1].position, GetComponent<ant_brain>(),true);
+                            is_work = true;
+                            goo = true;
+                            list_work.RemoveAt(list_work.Count - 1);
+                        }
+                        break;
                 }
                                           
             }
             else
             {
-            //if(my_dig!=null){
-               //сделать запрос к стройке что брать и куда нести
-               //верет вектор3: что взять, куда положить.
+                if (my_dig)
+                {
+                    //сделать запрос к стройке что брать и куда нести
+                    //верет вектор3: что взять, куда положить.
+                    Vector3 pos=new Vector3();
+                    pos= my_dig.what_destroy_next();
+                    list_work.Add(new Work("go_to_dig",pos));
+                    list_work.Add(new Work("take", pos));
+                }
+
+           
             //if(my_job!=null){
                 // запрос к менеджеру работ
             }

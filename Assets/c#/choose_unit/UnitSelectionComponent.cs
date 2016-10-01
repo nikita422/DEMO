@@ -88,9 +88,7 @@ public class UnitSelectionComponent : MonoBehaviour
     void Update()
     {
 
-        if (is_active_select_mode) 
-        {
-
+         
             all_units = GameObject.FindGameObjectsWithTag("Player").ToList<GameObject>();
             //Debug.Log("choose_mode_activve_now");
             // Если нажать левую кнопку мыши, начните выбор и запомните расположение мыши
@@ -127,12 +125,9 @@ public class UnitSelectionComponent : MonoBehaviour
 
                 }
             }
-        }
+        
     }
-    public void set_active(bool t_or_f)
-    {
-        is_active_select_mode = t_or_f;
-    }
+   
 
     void OnGUI()
     {
