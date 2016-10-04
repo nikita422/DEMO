@@ -21,9 +21,12 @@ public class ant_brain : MonoBehaviour
     {
         public string what_work;
         public Vector3 position;
+        public int x, y;
         public Work(string name, Vector3 pos)
         {
             what_work = name; position = new Vector3(pos.x,pos.y,pos.z);
+            x = (int)pos.x;
+            y = (int)pos.y;
         }
      
 
@@ -42,10 +45,13 @@ public class ant_brain : MonoBehaviour
     {
         if (!is_work)
         {
+            print("NOT IS WORK");
             if (list_work.Count != 0)
             {
+                print("LIST COUNR!=0");
                 switch (list_work[list_work.Count - 1].what_work)
                 {
+                     
                     case "go_to":
                         {
                             AB_alg ab = gameObject.AddComponent<AB_alg>();
@@ -57,6 +63,9 @@ public class ant_brain : MonoBehaviour
                         break;
                     case "take":
                         {
+                            print("TAKE");
+                            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<map>().delete_block(list_work[list_work.Count - 1].x, list_work[list_work.Count - 1].y);
+                            list_work.RemoveAt(list_work.Count - 1);
                             //тут спросить куда положить(Склад)
                             //добавить две работы, идти до склада и положить.
                         }
@@ -68,6 +77,7 @@ public class ant_brain : MonoBehaviour
                         break;
                     case "go_to_dig"://разница из за разных компонентов AB 
                         {
+                            print("go_to_dig");
                             AB_alg ab = gameObject.AddComponent<AB_alg>();
                             ab.where_to_go(transform_vec(transform.position), list_work[list_work.Count - 1].position, GetComponent<ant_brain>(),true);
                             is_work = true;
@@ -86,8 +96,11 @@ public class ant_brain : MonoBehaviour
                     //верет вектор3: что взять, куда положить.
                     Vector3 pos=new Vector3();
                     pos= my_dig.what_destroy_next();
-                    list_work.Add(new Work("go_to_dig",pos));
+                    
                     list_work.Add(new Work("take", pos));
+                    list_work.Add(new Work("go_to_dig", pos));
+                     
+                    
                 }
 
            

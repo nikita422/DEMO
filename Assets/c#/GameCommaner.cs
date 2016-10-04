@@ -9,11 +9,12 @@ public class GameCommaner : MonoBehaviour {
     public string[] toolbarmode = new string[] { "debug", "CHOOSE","CREATE"};
 
     Dig_c dig_c;
-
+    Store_c store_c;
     public bool now_press = false;
     public bool mouse_in_button;
     public string mousep;
     UnitSelectionComponent unitselecomp;
+    Select_zone select_zone;
      /*
       
       уходи от тулбаров и переходи на кнопки
@@ -25,10 +26,8 @@ public class GameCommaner : MonoBehaviour {
   	void Start () {
         map_dirt = GetComponent<map>();
         unitselecomp = GetComponent<UnitSelectionComponent>();
-        dig_c = GetComponent<Dig_c>();
-        dig_c.enabled = false;
         toolbar_mode = 1;
-         GetComponent<Select_zone>().enabled = false;
+        select_zone = GetComponent<Select_zone>();
 	}
 	
 	
@@ -79,14 +78,6 @@ public class GameCommaner : MonoBehaviour {
               }
             }
         }
-        if (toolbar_mode == 2)//CREATE
-        {
-            dig_c.enabled = true;
-        }
-        else
-        {
-            dig_c.enabled = false;
-        }
 
         if (now_press)
         {
@@ -106,6 +97,17 @@ public class GameCommaner : MonoBehaviour {
         if (toolbar_mode == 0)
         {
             toolbar_block = GUI.Toolbar(new Rect(10, 70, 150, 20), toolbar_block, toolbarblock);
+        }
+        if (toolbar_mode == 2)
+        {
+            if (GUI.Button(new Rect(10, 70, 100, 20), "STORE"))
+            {
+                select_zone.one_start("Store");
+            }
+            if (GUI.Button(new Rect(120, 70, 100, 20), "DIGGING"))
+            {
+                select_zone.one_start("Dig");
+            }
         }
 
      //  GUI.TextArea(new Rect(100, 100, 100, 100), mousep);

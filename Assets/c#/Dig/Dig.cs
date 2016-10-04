@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 public class Dig : MonoBehaviour {
     //delta 60
+    /*
+     добавить появление плана при наведение мышкой на иконку
+     */
     List<ant_brain> worker;
     List<Vector3> desrtoy_stack;
     GameObject[,] go_zone;
     int count = -1;
     int worker_now = 0;
-    public float vert = 230F;
-    public float old_vert=230F;
+    public float vert = 266F;
+    public float old_vert = 266F;
     public float speed=20F;
     bool up = false;
+    public bool toggle_visible_plan;
     public  void set_primary(List<Vector3> desrtoy_stackk, GameObject[,] go_zonee)
     {
         go_zone = new GameObject[14, 40];
@@ -30,8 +34,8 @@ public class Dig : MonoBehaviour {
     {
         if (up)
         {
-            speed = 40;
-            vert -= speed * Time.deltaTime;
+            speed = 8;
+            vert -= speed;
             if (old_vert - 60 > vert)
             {
                 up = false;
@@ -47,19 +51,21 @@ public class Dig : MonoBehaviour {
         //мураш сам найдет путь, как дойдет, возмет блок и будет считать путь до склада.
         if (desrtoy_stack.Count < count)
         {
-            //desrtoy this dig
+            Destroy(this);
         }
         return desrtoy_stack[count];
     }
 
+    public void up_gui()
+    {
+        up = true;
+    }
     void OnGUI()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            up = true;
-        }
+        
         if (GUI.Button(new Rect(10, vert, 50, 50), worker_now.ToString()))
         {
+            
             print("press digging"); 
             worker = new List<ant_brain>(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<UnitSelectionComponent>().get_selected_units());
             if (worker != null)
@@ -72,8 +78,21 @@ public class Dig : MonoBehaviour {
             }
             worker_now = worker.Count;
         }
+        //toggle_visible_plan = GUI.Toggle(new Rect(60, vert, 50, 50), toggle_visible_plan, "");
+        //if (toggle_visible_plan)
+        //{
+        //    print("fggfg");
+        //    for (int i = 0; i < 14; i++)
+        //    {
+        //        for (int j = 0; j < 40; j++)
+        //        {
+        //            if (go_zone[i, j] != null)
+        //        {
+        //            go_zone[i, j].SetActive(toggle_visible_plan);
+        //        }   
+        //        }
+        //    }
+        //}
     }
-   
-
-
+ 
 }

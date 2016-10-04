@@ -37,8 +37,17 @@ public class Wave_Alg : MonoBehaviour {
         {
             return what_desrtoy;
         }
-      
 
+       public void set_primary(int[,] plan, Vector2 start_block)
+       {
+           x = 14; y = 40;
+           now_block = new List<Vector3>();
+           what_desrtoy = new List<Vector3>();
+
+           dig_plan = new int[x, y];
+           now_block.Add(start_block);
+           what_desrtoy.Add(start_block);
+       }
        public void build_plan()
        {
            int nomer = 2;
