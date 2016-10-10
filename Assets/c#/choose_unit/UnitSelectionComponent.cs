@@ -118,7 +118,6 @@ public class UnitSelectionComponent : MonoBehaviour
                         {
                             print(all_units[i]);
                             selected_units.Add(all_units[i]);
-
                         }
                     }
 

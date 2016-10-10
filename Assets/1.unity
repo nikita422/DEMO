@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edfb430a75fc0f42a2f597ae2fc83d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pref_enter: {fileID: 0}
   toolbar_mode: 0
   toolbar_block: 0
   toolbarblock:
@@ -340,6 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa505eadc2042304cab9f2314b797226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pref_store: {fileID: 0}
 --- !u!114 &1860696320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,9 +377,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pref_green_zone: {fileID: 181088, guid: f1c51ad96065b9b4891e962792fb0bbd, type: 2}
-  pref_red_zone: {fileID: 150080, guid: d233c139d0c57124a84dabbc2b324e44, type: 2}
   pref_selec_zone: {fileID: 169480, guid: bb39bf314d9c3994885e26ed791b0b85, type: 2}
-  active: 0
+  mode: 
+  dig_c: {fileID: 0}
+  store_c: {fileID: 0}
 --- !u!114 &1860696324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb5fcbb342301a419eab51f8e68f3d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vert: 266
+  old_vert: 266
+  speed: 20
 --- !u!1 &1944686385
 GameObject:
   m_ObjectHideFlags: 0

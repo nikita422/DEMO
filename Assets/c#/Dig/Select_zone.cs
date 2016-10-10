@@ -29,14 +29,14 @@ public class Select_zone : MonoBehaviour {
         
         mode = select_mode;
         active = true;
-        select_map = new int[14, 40];
-        go_zone = new GameObject[14, 40];
+        select_map = new int[25, 40];
+        go_zone = new GameObject[25, 40];
         if (GetComponent<map>().get_hight_map() != null)
         {
             go_dirt = (GameObject.FindWithTag("MainCamera")).GetComponent<map>().get_hight_map();
         }
 
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < 25; i++)
         {
             for (int j = 0; j < 40; j++)
             {
@@ -158,7 +158,7 @@ public class Select_zone : MonoBehaviour {
 
     public void no_visible_select_go()
     {
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < 25; i++)
         {
             for (int j = 0; j < 40; j++)
             {
@@ -181,7 +181,7 @@ public class Select_zone : MonoBehaviour {
     public Vector3 camera_to_arr(Vector3 camera_vec)
     {
         Vector3 int_vec = new Vector3();
-        int_vec.x = 14 - 1 - (int)camera_vec.y;//13-(int..
+        int_vec.x = 25 - 1 - (int)camera_vec.y;//13-(int..
         int_vec.y = (int)camera_vec.x;
         return int_vec;
     }

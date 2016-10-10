@@ -39,19 +39,22 @@ public class AB_alg : MonoBehaviour{
     bool go;
     int x1, y1, x2, y2;
 
-    public void where_to_go(Vector3 start_vec, Vector3 end_vec, ant_brain ant, bool is_dig = false)
+    public void where_to_go(Vector3 start_vec, Vector3 end_vec, ant_brain ant)
     {
-        StartCoroutine(find_way(start_vec, end_vec, ant,is_dig));
+        StartCoroutine(find_way(start_vec, end_vec, ant));
     }
 
     
-    IEnumerator find_way(Vector3 start_vec, Vector3 end_vec, ant_brain ant, bool is_dig)
+    IEnumerator find_way(Vector3 start_vec, Vector3 end_vec, ant_brain ant)
     {
         GameObject[,] go_dirt = (GameObject.FindWithTag("MainCamera")).GetComponent<map>().get_hight_map();
             go = true;
-            hight_map = new int[14, 40];
+            hight_map = new int[25, 40];
             list_ghost = new List<Ghost>();
 
+
+        //print(start_vec.ToString());
+        //print(end_vec.ToString());
 
             x1 = (int)start_vec.x;
             y1 = (int)start_vec.y;
@@ -59,7 +62,7 @@ public class AB_alg : MonoBehaviour{
             y2 = (int)end_vec.y;
 
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 25; i++)
             {
                 for (int j = 0; j < 40; j++)
                 {
@@ -73,11 +76,17 @@ public class AB_alg : MonoBehaviour{
                     }
                 }
             }
-            if (is_dig)
-            {
-                hight_map[x2, y2] = 0;
-            }
-             yield return null;
+
+
+        
+            
+
+
+
+
+
+
+        yield return null;
 
             list_ghost.Add(new Ghost(x1, y1));
             do
@@ -96,9 +105,10 @@ public class AB_alg : MonoBehaviour{
 
                     int x = list_ghost[count].now_x;
                     int y = list_ghost[count].now_y;
-                    if (x < 1 || x > 13 || y < 1 || y > 39)
+                    if (x < 1 || x > 24 || y < 1 || y > 39)
                     {
                         list_ghost.RemoveAt(count);
+                   
                         continue;
                     }
 
@@ -276,20 +286,16 @@ public class AB_alg : MonoBehaviour{
                 
             } while (go);
             //not find
-
             List<Vector3> list = new List<Vector3>(1);
+           
             list.Add(new Vector3(0, 0, 0));
-
-
+           
             ant.set_way(list);
             yield break;
            
         }
 
-    public void test()
-    {
-        print("get_comp<ab>_OK!");
-    }
+    
 
     }
 

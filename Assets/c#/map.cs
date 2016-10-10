@@ -5,49 +5,61 @@ public class map : MonoBehaviour {
 
     
     public static GameObject[,] go_dirt;
-    public static int x=14, y=40;
+    public static int x=25, y=40;
     public float Size;
     public GameObject Pref_Dirt;
     public GameObject Pref_Ant;
+    public GameObject Pref_back;
     public string text;
+
+
+
     void Start () {
         go_dirt = new GameObject[x, y];
-        create_map(14,40);//не создавать первые два ряда и поднять всю карту в мировом на 2 пункта вверх
-	}
-	void Update () {
-       
-        if (Input.GetButtonUp("Jump"))
+        for (int i = 0; i < x; i++)
         {
-
-            string s = "";
-            for (int i = 0; i < 14; i++)
+            for (int j = 0; j < y; j++)
             {
-                for (int j = 0; j < 40; j++)
-                {
-                    if (go_dirt[i, j] == null)
-                    {
-                        s += 0; s += " ";
-                    }
-                    else
-                    {
-                        s += 1; s += " ";
-                    }
-                    
-                } s += '\n';
+                go_dirt[i, j] = null;
             }
-
-            Debug.Log(s);
         }
-	}
-     public  GameObject[,] get_hight_map()
+        create_map(25, 40);//не создавать первые пять рядов  
+    }
+    //void Update()
+    //{
+
+    //    if (Input.GetButtonUp("Jump"))
+    //    {
+
+    //        string s = "";
+    //        for (int i = 0; i < x; i++)
+    //        {
+    //            for (int j = 0; j < y; j++)
+    //            {
+    //                if (go_dirt[i, j] == null)
+    //                {
+    //                    s += 0; s += " ";
+    //                }
+    //                else
+    //                {
+    //                    s += 1 ; s += " ";
+    //                }
+
+    //            }
+    //            s += '\n';
+    //        }
+
+    //        Debug.Log(s);
+    //    }
+    //}
+    public  GameObject[,] get_hight_map()
     {
-         
         return go_dirt;
     }
     public void create_map(int hight, int lenght)
     {
 
-        for (int i = 0; i < hight; i++)
+        for (int i = 5; i < hight; i++)//первые 5 рядов - поверхность
         {
             for (int j = 0; j < lenght; j++)
             {
@@ -59,17 +71,29 @@ public class map : MonoBehaviour {
     public void create_dirt(int arr_x,int arr_y)
     {
         if (go_dirt[arr_x, arr_y] == null)
-        {
+        {   
             Vector2 pos = new Vector2(Size * arr_to_camera(arr_x, arr_y).x, Size * arr_to_camera(arr_x, arr_y).y);
             GameObject ground = Instantiate(Pref_Dirt, pos, Quaternion.identity) as GameObject;
-            ground.transform.parent =GameObject.Find("back").transform;
+            //  ground.transform.parent =GameObject.Find("back").transform;
             go_dirt[arr_x, arr_y] = ground;   
 
         }
     }
+
+    public void create_back(int x,int y)
+    {
+        if (go_dirt[x, y] == null)
+        {
+            Vector2 pos = new Vector2(x,y);
+            GameObject back=Instantiate(Pref_back, pos, Quaternion.identity) as GameObject;
+        }
+    }
+
+
+
+
     public void create_ant(int arr_x,int arr_y)
     {
-
         if (go_dirt[arr_x, arr_y] == null)
         {
             Vector2 pos = new Vector2(Size * arr_to_camera(arr_x, arr_y).x, Size * arr_to_camera(arr_x, arr_y).y);
@@ -79,8 +103,8 @@ public class map : MonoBehaviour {
     }
     public void delete_block(int arr_x,int arr_y)
     {
-       // print("DELETE_BLOC_F()");
-        if (go_dirt[arr_x, arr_y] != null)// POTENCION FUCK SHIT
+        print("delete_block");
+        if (go_dirt[arr_x, arr_y] != null)
         {
             Destroy(go_dirt[arr_x, arr_y]);
         }
@@ -94,8 +118,5 @@ public class map : MonoBehaviour {
 
     }
 
-    public void test()
-    {
-        print("get_comp<map>_OK");
-    }
+   
 }

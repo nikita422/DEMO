@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 public class GameCommaner : MonoBehaviour {
-
+    public GameObject pref_enter;
     public int toolbar_mode = 0;
     public int toolbar_block = 0;
     public string[] toolbarblock = new string[] {"DIRT", "ANT"};
@@ -12,17 +12,23 @@ public class GameCommaner : MonoBehaviour {
     Store_c store_c;
     public bool now_press = false;
     public bool mouse_in_button;
-    public string mousep;
+
+    Vector3 mousep;
+    Vector3 int_mousep;
+
     UnitSelectionComponent unitselecomp;
     Select_zone select_zone;
+
+    GameObject Enter;
+    bool already_enter = false;
      /*
       
       уходи от тулбаров и переходи на кнопки
       * 
       */
    map map_dirt;
-   public int x;//14
-   public int y;//40
+    int x=25;
+    int y=40;//40
   	void Start () {
         map_dirt = GetComponent<map>();
         unitselecomp = GetComponent<UnitSelectionComponent>();
@@ -32,12 +38,13 @@ public class GameCommaner : MonoBehaviour {
 	
 	
 	void Update () {
-       // mousep = Input.mousePosition.ToString();
+        //mousep = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //int_mousep = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         is_mouse_in_button();
+        
 
 
-
-        if(toolbar_mode==0)//CREATE
+        if (toolbar_mode==0)//CREATE
         {
             unitselecomp.enabled = false;
             
@@ -74,6 +81,7 @@ public class GameCommaner : MonoBehaviour {
               List<ant_brain> selec_unit_brain = unitselecomp.get_selected_units();
               for (int i = 0; i < selec_unit_brain.Count; i++)
               {
+                  
                   selec_unit_brain[i].go_to(camera_to_arr(end_pos));
               }
             }
@@ -81,7 +89,7 @@ public class GameCommaner : MonoBehaviour {
 
         if (now_press)
         {
-            Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));      
             map_dirt.delete_block((int)vec.x, (int)vec.y);
         }
 
@@ -108,16 +116,27 @@ public class GameCommaner : MonoBehaviour {
             {
                 select_zone.one_start("Dig");
             }
+            if (GUI.Button(new Rect(230, 70, 100, 20), "ENTER"))
+            {
+                
+                if (!already_enter)
+                {
+                    already_enter = true;
+                     
+                    Enter = Instantiate(pref_enter, new Vector3(-1, -1, 4), Quaternion.identity) as GameObject;
+                }
+            }
         }
 
-     //  GUI.TextArea(new Rect(100, 100, 100, 100), mousep);
+        //GUI.TextArea(new Rect(100, 100, 100, 100), mousep.ToString());
+        //GUI.TextArea(new Rect(0, 100, 100, 100), int_mousep.ToString());
     }
 
  
     public Vector3 camera_to_arr(Vector3 camera_vec)
     {
         Vector3 int_vec = new Vector3();
-        int_vec.x = x - 1 - (int)camera_vec.y;//13-(int..
+        int_vec.x = 25 - 1 - (int)camera_vec.y;//13-(int..
         int_vec.y = (int)camera_vec.x;
         return int_vec;
     }
@@ -126,12 +145,10 @@ public class GameCommaner : MonoBehaviour {
     {
         if ((Input.mousePosition.x < 260 && Input.mousePosition.y > 230) || (Input.mousePosition.x < 60 && Input.mousePosition.y < 300))
         {
-
             mouse_in_button = true;
         }
         else
         {
-
             mouse_in_button = false;
         }
 

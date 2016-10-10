@@ -8,7 +8,10 @@ public class Dig : MonoBehaviour {
      */
     List<ant_brain> worker;
     List<Vector3> desrtoy_stack;
+    List<Vector3> where_desrtoy_stack;
+    Vector3 dig_enter;
     GameObject[,] go_zone;
+
     int count = -1;
     int worker_now = 0;
     public float vert = 266F;
@@ -16,10 +19,11 @@ public class Dig : MonoBehaviour {
     public float speed=20F;
     bool up = false;
     public bool toggle_visible_plan;
-    public  void set_primary(List<Vector3> desrtoy_stackk, GameObject[,] go_zonee)
+
+    public  void set_primary(List<Vector3> desrtoy_stackk, GameObject[,] go_zonee, Vector3 dig_enterr, List<Vector3> where_desrtoyy)
     {
-        go_zone = new GameObject[14, 40];
-        for (int i = 0; i < 14; i++)
+        go_zone = new GameObject[25, 40];
+        for (int i = 0; i < 25; i++)
         {
             for (int j = 0; j < 40; j++)
             {
@@ -28,7 +32,8 @@ public class Dig : MonoBehaviour {
         }
         print("set_primary");
         desrtoy_stack = new List<Vector3>(desrtoy_stackk);
-        
+        where_desrtoy_stack = new List<Vector3>(where_desrtoyy);
+        dig_enter = dig_enterr;
     }
     void Update()
     {
@@ -54,6 +59,18 @@ public class Dig : MonoBehaviour {
             Destroy(this);
         }
         return desrtoy_stack[count];
+    }
+    public Vector3  where_desrtoy()
+    {
+       
+        
+        //просто возращаем местположение блока, который надо разрушить
+        //мураш сам найдет путь, как дойдет, возмет блок и будет считать путь до склада.
+        if (where_desrtoy_stack.Count < count)
+        {
+            Destroy(this);
+        }
+        return where_desrtoy_stack[count];
     }
 
     public void up_gui()
