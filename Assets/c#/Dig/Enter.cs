@@ -34,16 +34,19 @@ public class Enter : MonoBehaviour {
     {
         Vector2 pos = camera_to_arr(transform.position);
         
-        print("create_enter");
+        //print("create_enter");
         map.delete_block((int)pos.x+2,(int)pos.y);
         map.delete_block((int)pos.x + 3, (int)pos.y);
         enter = new Vector3((int)pos.x + 2, (int)pos.y);
         create_Stack(pos);
     }
 
-  
+    public Vector3 get_enter_pos()
+    {
+        return enter;
+    }
 
-    public Vector2 where_put_block()
+    public Vector3 where_put_block()
     {
         count++;
         if (count > 22)
@@ -56,15 +59,15 @@ public class Enter : MonoBehaviour {
         }
     }
 
-    public void put_block(string type_block,Vector2 pos)
+    public void put_block(Vector3 pos)
     {
-        if (type_block == "dirt")
-        {
-            map.create_dirt((int)pos.x, (int)pos.y);
-        }
-        if (type_block == "back")
+        if (pos.z==-1)
         {
             map.create_back((int)pos.x, (int)pos.y);
+        }
+       else
+        {
+            map.create_dirt((int)pos.x, (int)pos.y);   
         }
     }
 

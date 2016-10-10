@@ -16,7 +16,6 @@ public class Store_alg : MonoBehaviour
     //}
     public Vector2 where_start_wave(int[,] select_map)// c 0,1,2
     {
-
         for (int j = 0; j < 40; j++)
         {
             for (int i = 0; i < 14; i++)
@@ -41,7 +40,7 @@ public class Store_alg : MonoBehaviour
             }
         }
     nextt:
-        middle = (int)((first_j + end_j) / 2);
+        middle = (int)((first_j + end_j) / 2);//
 
         for (int i = 1; i < 13; i++)
         {

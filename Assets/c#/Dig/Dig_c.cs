@@ -40,7 +40,10 @@ public class Dig_c : MonoBehaviour {
         w_a.build_plan();
       
         w_a.print_what_desrtoy();
+        w_a.print_where_desrtoy();
+        print("Dig_enter: "+ w_a.get_enter_dig().ToString());
         GameObject dig = Instantiate(pref_dig, new Vector3(-1,-1,0), Quaternion.identity) as GameObject;
+        
         dig.GetComponent<Dig>().set_primary(w_a.get_what_destroy(),go_zonee,w_a.get_enter_dig(),w_a.get_where_destroy());
          
         

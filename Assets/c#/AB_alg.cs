@@ -105,7 +105,7 @@ public class AB_alg : MonoBehaviour{
 
                     int x = list_ghost[count].now_x;
                     int y = list_ghost[count].now_y;
-                    if (x < 1 || x > 24 || y < 1 || y > 39)
+                    if (x < 2 || x > 23 || y < 2 || y > 38)
                     {
                         list_ghost.RemoveAt(count);
                    

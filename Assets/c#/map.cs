@@ -75,6 +75,7 @@ public class map : MonoBehaviour {
             Vector2 pos = new Vector2(Size * arr_to_camera(arr_x, arr_y).x, Size * arr_to_camera(arr_x, arr_y).y);
             GameObject ground = Instantiate(Pref_Dirt, pos, Quaternion.identity) as GameObject;
             //  ground.transform.parent =GameObject.Find("back").transform;
+           // ground.GetComponent<TextMesh>().text = "123123";
             go_dirt[arr_x, arr_y] = ground;   
 
         }
@@ -103,7 +104,7 @@ public class map : MonoBehaviour {
     }
     public void delete_block(int arr_x,int arr_y)
     {
-        print("delete_block");
+       // print("delete_block");
         if (go_dirt[arr_x, arr_y] != null)
         {
             Destroy(go_dirt[arr_x, arr_y]);

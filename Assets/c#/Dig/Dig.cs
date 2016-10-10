@@ -30,42 +30,26 @@ public class Dig : MonoBehaviour {
                 go_zone[i, j] = go_zonee[i,j];
             }
         }
-        print("set_primary");
+        //print("set_primary");
         desrtoy_stack = new List<Vector3>(desrtoy_stackk);
         where_desrtoy_stack = new List<Vector3>(where_desrtoyy);
         dig_enter = dig_enterr;
     }
-    void Update()
-    {
-        if (up)
-        {
-            speed = 8;
-            vert -= speed;
-            if (old_vert - 60 > vert)
-            {
-                up = false;
-                old_vert = vert;
-            }
-        }
-    }
+   
     public Vector3 what_destroy_next()
     {
-        print("what_desrtoy_next");
+        //print("what_desrtoy_next");
         count++;  
-        //просто возращаем местположение блока, который надо разрушить
-        //мураш сам найдет путь, как дойдет, возмет блок и будет считать путь до склада.
+         
         if (desrtoy_stack.Count < count)
         {
             Destroy(this);
         }
+        print("desrtoy_next_block:" + desrtoy_stack[count].x + " " + desrtoy_stack[count].y);
         return desrtoy_stack[count];
     }
     public Vector3  where_desrtoy()
-    {
-       
-        
-        //просто возращаем местположение блока, который надо разрушить
-        //мураш сам найдет путь, как дойдет, возмет блок и будет считать путь до склада.
+    {         
         if (where_desrtoy_stack.Count < count)
         {
             Destroy(this);
@@ -79,10 +63,20 @@ public class Dig : MonoBehaviour {
     }
     void OnGUI()
     {
-        
+        if (up)
+        {
+            speed = 8;
+            vert -= speed;
+            if (old_vert - 60 > vert)
+            {
+                up = false;
+                old_vert = vert;
+            }
+        }
+
         if (GUI.Button(new Rect(10, vert, 50, 50), worker_now.ToString()))
         {
-            
+            print(dig_enter.ToString());
             print("press digging"); 
             worker = new List<ant_brain>(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<UnitSelectionComponent>().get_selected_units());
             if (worker != null)
@@ -91,7 +85,7 @@ public class Dig : MonoBehaviour {
             }
             for (int i = 0; i < worker.Count; i++)
             {
-                worker[i].set_dig(this);
+                worker[i].set_dig(this,dig_enter);
             }
             worker_now = worker.Count;
         }

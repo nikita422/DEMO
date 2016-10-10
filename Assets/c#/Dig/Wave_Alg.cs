@@ -11,10 +11,11 @@ public class Wave_Alg : MonoBehaviour {
     int x, y;
 
     Vector3 dig_enter;
+    bool alreay_enter = false;
 
     public void set_primary(int[,] plan)
     {
-        x = 14; y = 40;
+        x = 25; y = 40;
         now_block = new List<Vector3>();
         what_desrtoy = new List<Vector3>();
         where_desrtoy = new List<Vector3>();
@@ -27,8 +28,10 @@ public class Wave_Alg : MonoBehaviour {
                 if (plan[i, j] == 666)
                 {
          
-                    if (dig_enter == null)
+                    if (!alreay_enter)
                     {
+                        alreay_enter = true;
+                        
                         where_enter(plan, i, j);
                     }
 
@@ -139,21 +142,31 @@ public class Wave_Alg : MonoBehaviour {
        }
        public void print_what_desrtoy()
        {
-           string s = "";
+           string s = "Desrtoy_block: ";
            for (int i = 0; i < what_desrtoy.Count; i++)
            {
-               s += what_desrtoy[i].x + " " + what_desrtoy[i].y; s += "    ";
+               s += what_desrtoy[i].x + ", " + what_desrtoy[i].y; s += "    ";
            }
            print(s);
        }
+
+
+    public void print_where_desrtoy()
+    {
+        string s = "Where_desrtoy: ";
+        for (int i = 0; i < where_desrtoy.Count; i++)
+        {
+            s += where_desrtoy[i].x + ", " + where_desrtoy[i].y; s += "    ";
+        }
+        print(s);
+
+    }
        void where_enter(int[,] plan,int x,int y)
        {
-         
-
+ 
            if (plan[x - 1, y] == 0)
            {
-               if (plan[x - 1, y - 1] == 1 || plan[x - 1, y + 1] == 1) dig_enter=new Vector3(x - 1, y);
-                
+               if (plan[x - 1, y - 1] == 1 || plan[x - 1, y + 1] == 1) dig_enter=new Vector3(x - 1, y);  
            }
            if (plan[x, y + 1] == 0)
            {
@@ -167,9 +180,8 @@ public class Wave_Alg : MonoBehaviour {
            {
                if (plan[x - 1, y - 1] == 1 || plan[x + 1, y - 1] == 1) dig_enter= new Vector3(x, y - 1);
            }
-           print("not found enter to dig");
 
-       }
+    }
 	
 
  
