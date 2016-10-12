@@ -25,7 +25,7 @@ public class Enter : MonoBehaviour {
                 create_enter();
             }
         }
-       
+      
 
     }
 

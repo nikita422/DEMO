@@ -34,19 +34,24 @@ public class Dig : MonoBehaviour {
         desrtoy_stack = new List<Vector3>(desrtoy_stackk);
         where_desrtoy_stack = new List<Vector3>(where_desrtoyy);
         dig_enter = dig_enterr;
+        where_desrtoy_stack.RemoveAt(count - 1);
     }
    
     public Vector3 what_destroy_next()
     {
         //print("what_desrtoy_next");
-        count++;  
-         
-        if (desrtoy_stack.Count < count)
-        {
-            Destroy(this);
+        count++;
+
+        if (desrtoy_stack.Count < count) {
+
+            for (int i = 0; i < worker.Count; i++)
+            {
+                worker[i].set_dig(null);
+            }
+            Destroy(this.gameObject);
         }
-        print("desrtoy_next_block:" + desrtoy_stack[count].x + " " + desrtoy_stack[count].y);
         return desrtoy_stack[count];
+        
     }
     public Vector3  where_desrtoy()
     {         
@@ -56,7 +61,10 @@ public class Dig : MonoBehaviour {
         }
         return where_desrtoy_stack[count];
     }
-
+    public Vector3 get_enter_dig()
+    {
+        return dig_enter;
+    }
     public void up_gui()
     {
         up = true;
@@ -76,16 +84,16 @@ public class Dig : MonoBehaviour {
 
         if (GUI.Button(new Rect(10, vert, 50, 50), worker_now.ToString()))
         {
-            print(dig_enter.ToString());
-            print("press digging"); 
+          //  print(dig_enter.ToString());
+           // print("press digging"); 
             worker = new List<ant_brain>(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<UnitSelectionComponent>().get_selected_units());
             if (worker != null)
             {
-                print("add "+ worker.Count);
+              //  print("add "+ worker.Count);
             }
             for (int i = 0; i < worker.Count; i++)
             {
-                worker[i].set_dig(this,dig_enter);
+                worker[i].set_dig(this);
             }
             worker_now = worker.Count;
         }

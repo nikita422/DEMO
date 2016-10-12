@@ -116,7 +116,7 @@ public class UnitSelectionComponent : MonoBehaviour
                        
                         if (!selected_units.Contains(all_units[i]))//если в какой нибудь из выбранных юниты не входит нынешний юнит
                         {
-                            print(all_units[i]);
+                           // print(all_units[i]);
                             selected_units.Add(all_units[i]);
                         }
                     }
