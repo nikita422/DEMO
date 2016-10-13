@@ -8,11 +8,12 @@ public class ant_brain : MonoBehaviour
 {
     public float speed;
     //bool stop_now=false;
-  
+     
+    GameObject dirt_to_store;
     public Dig my_dig;// стройка к которой будет приписан мураш
     List<Vector3> way;// путь юнита
     Vector3  oldpos, newpos;
-   
+    map map;
     bool now_move = false;
     Vector3 dig_enter;
     Vector3 enter_store_pos;
@@ -21,13 +22,13 @@ public class ant_brain : MonoBehaviour
     //public float angle = 0;
     //public float radius = 0.6f;
     //public bool isCircle = false;
-    
 
-    bool is_work=false;
+
+    public bool is_work=false;
     bool wait = false;
-    bool goo = false;
-    bool loaded_dirt = false;
-
+    public bool goo = false;
+   public bool loaded_dirt = false;
+    AB_alg ab;
     class Work
     {
         public string what_work;
@@ -46,10 +47,19 @@ public class ant_brain : MonoBehaviour
 
     }
 
+
+    public bool see_dirt = false;
    
     Queue<Work> qlist_work;
    void Start()
    {
+        map = (GameObject.FindWithTag("MainCamera")).GetComponent<map>();
+        dirt_to_store = Instantiate(GameObject.FindGameObjectWithTag("Dirt_enter"), transform.position, Quaternion.identity) as GameObject;
+        dirt_to_store.transform.parent = this.gameObject.transform;
+        dirt_to_store.transform.position +=new Vector3(0, 0, -2);
+        dirt_to_store.SetActive(false);
+
+       ab = gameObject.AddComponent<AB_alg>();
        qlist_work = new Queue<Work>();
        oldpos = transform.position;
        newpos = transform.position;
@@ -59,7 +69,11 @@ public class ant_brain : MonoBehaviour
 
     void Update()
     {
+
         
+          
+        
+
         if (!is_work)
         {   
             if (qlist_work.Count != 0)
@@ -67,9 +81,8 @@ public class ant_brain : MonoBehaviour
                 switch (qlist_work.Peek().what_work)
                 {               
                     case "go_to":
-                        {
-                            AB_alg ab = gameObject.AddComponent<AB_alg>();
-                            ab.where_to_go(transform_vec(transform.position), qlist_work.Dequeue().position, GetComponent<ant_brain>());
+                        { 
+                            ab.where_to_go(transform_vec(transform.position), qlist_work.Peek().position, GetComponent<ant_brain>());
                             is_work = true;
                             goo = true;
                         }
@@ -77,21 +90,24 @@ public class ant_brain : MonoBehaviour
                     case "take":
                         {
                             loaded_dirt = true;
-                            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<map>().delete_block(qlist_work.Peek().x, qlist_work.Dequeue().y);                        
+                            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<map>().delete_block(qlist_work.Peek().x, qlist_work.Dequeue().y);
+                            dirt_to_store.SetActive(true);
                         }
                         break;
                     case "put":
                         {
-                             
 
+                            
                         }
                         break;
                     case "put_enter":
                         {
-                            print("WORK:put_enter");
                             loaded_dirt = false;
-                           // enter_store.put_block(list_work[list_work.Count-1].position);
-                           // list_work.RemoveAt(list_work.Count - 1);
+                            print("WORK:put_enter");   
+                            dirt_to_store.SetActive(false);
+                           
+                            enter_store.put_block(qlist_work.Peek().position);
+                            qlist_work.Dequeue();
                         }
                         break;
 
@@ -124,7 +140,7 @@ public class ant_brain : MonoBehaviour
                 }
                 if (loaded_dirt)
                 {
-                    if (transform_vec(transform.position).x != (int)enter_store_pos.x && (transform_vec(transform.position).y != (int)enter_store_pos.y))
+                    if (transform_vec(transform.position) != enter_store_pos)
                     {
                         qlist_work.Enqueue(new Work("go_to", enter_store_pos));  
                     }
@@ -133,10 +149,13 @@ public class ant_brain : MonoBehaviour
                         Vector3 pos_block = new Vector3();
                         pos_block = enter_store.where_put_block();
 
-                        Vector3 pos_desrtoy = new Vector3();// FIND WITH FUNC
-
-                       // list_work.Add(new Work("put_enter", pos_block)); 
-                       // list_work.Add(new Work("go_to", pos_desrtoy)); 
+                        Vector2 pos_desrtoy = map.where_can(pos_block);// FIND WITH FUNC
+                        if(pos_desrtoy==new Vector2(0, 0))
+                        {
+                            print("NOT_FIND_WHERE_CAN");
+                        }
+                        qlist_work.Enqueue(new Work("go_to", pos_desrtoy));
+                        qlist_work.Enqueue(new Work("put", pos_block));
                     }
                 }
 
@@ -233,6 +252,7 @@ public class ant_brain : MonoBehaviour
             //    yield break;
             //}
         }
+        qlist_work.Dequeue();
         is_work = false;    
         way.Clear();               
 

@@ -108,7 +108,6 @@ public class AB_alg : MonoBehaviour{
                     if (x < 2 || x > 23 || y < 2 || y > 38)
                     {
                         list_ghost.RemoveAt(count);
-                   
                         continue;
                     }
 

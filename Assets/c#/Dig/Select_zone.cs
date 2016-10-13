@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class Select_zone : MonoBehaviour {
 
@@ -64,62 +65,67 @@ public class Select_zone : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0) && !mouse_in_button)//create
             {
-                begin_plan = true;
-                Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
-                if (mode=="Dig")
+                if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    if (go_zone[(int)vec.x, (int)vec.y] == null && go_dirt[(int)vec.x, (int)vec.y] != null)
+
+
+                    begin_plan = true;
+                    Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+                    if (mode == "Dig")
                     {
-                        if (is_near_zero((int)vec.x, (int)vec.y))
+                        if (go_zone[(int)vec.x, (int)vec.y] == null && go_dirt[(int)vec.x, (int)vec.y] != null)
                         {
-                            select_map[(int)vec.x, (int)vec.y] = 666;
+                            if (is_near_zero((int)vec.x, (int)vec.y))
+                            {
+                                select_map[(int)vec.x, (int)vec.y] = 666;
+                            }
+                            else
+                            {
+                                select_map[(int)vec.x, (int)vec.y] = 2;
+                            }
+                            go_zone[(int)vec.x, (int)vec.y] = Instantiate(pref_green_zone, transform_vec(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity) as GameObject;
+                        }
+                    }
+                    else ////////////STOREEEEE
+                    {
+                        if (go_zone[(int)vec.x, (int)vec.y] == null && go_dirt[(int)vec.x, (int)vec.y] == null)
+                        {
+                            select_map[(int)vec.x, (int)vec.y] = 2;
+                            go_zone[(int)vec.x, (int)vec.y] = Instantiate(pref_green_zone, transform_vec(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity) as GameObject;
+                        }
+                    }
+                }
+                if (Input.GetMouseButtonDown(1) && !mouse_in_button)//delete
+                {
+                    Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    if (mode == "Dig")
+                    {
+                        if (go_dirt[(int)vec.x, (int)vec.y] == null)
+                        {
+                            select_map[(int)vec.x, (int)vec.y] = 0;
                         }
                         else
                         {
-                            select_map[(int)vec.x, (int)vec.y] = 2;
+                            select_map[(int)vec.x, (int)vec.y] = 1;
                         }
-                        go_zone[(int)vec.x, (int)vec.y] = Instantiate(pref_green_zone, transform_vec(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity) as GameObject;
-                    }
-                }
-                else ////////////STOREEEEE
-                {
-                    if (go_zone[(int)vec.x, (int)vec.y] == null && go_dirt[(int)vec.x, (int)vec.y] == null)
-                    {
-                        select_map[(int)vec.x, (int)vec.y] = 2;
-                        go_zone[(int)vec.x, (int)vec.y] = Instantiate(pref_green_zone, transform_vec(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity) as GameObject;
-                    }
-                }
-            }
-            if (Input.GetMouseButtonDown(1) && !mouse_in_button)//delete
-            {
-                Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                if (mode == "Dig")
-                {
-                    if (go_dirt[(int)vec.x, (int)vec.y] == null)
-                    {
-                        select_map[(int)vec.x, (int)vec.y] = 0;
-                    }
-                    else
-                    {
-                        select_map[(int)vec.x, (int)vec.y] = 1;
-                    }
-                    Destroy(go_zone[(int)vec.x, (int)vec.y]);
-                }
-                else//////////STOOOOOOORE
-                {
-                    if (select_map[(int)vec.x, (int)vec.y] != 0)
-                    {
-                        select_map[(int)vec.x, (int)vec.y] = 0;//?????????????????????????????????
                         Destroy(go_zone[(int)vec.x, (int)vec.y]);
                     }
+                    else//////////STOOOOOOORE
+                    {
+                        if (select_map[(int)vec.x, (int)vec.y] != 0)
+                        {
+                            select_map[(int)vec.x, (int)vec.y] = 0;//?????????????????????????????????
+                            Destroy(go_zone[(int)vec.x, (int)vec.y]);
+                        }
+                    }
                 }
+                //if (now_press)
+                //{
+                //    Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                //    map_dirt.delete_block((int)vec.x, (int)vec.y);
+                //}
             }
-            //if (now_press)
-            //{
-            //    Vector3 vec = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            //    map_dirt.delete_block((int)vec.x, (int)vec.y);
-            //}
         }
     }
    
@@ -128,31 +134,35 @@ public class Select_zone : MonoBehaviour {
     {
         if (begin_plan)
         {
-            if (GUI.Button(new Rect(10, 100, 70, 30), "OK"))      //ЕСЛИ ПРИНИМААЕМ, ТО ОТПРАВЛЯЕМ СЕЛЕКТ МЭП НАВЕРХ, 
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (mode == "Dig")
+                if (GUI.Button(new Rect(10, 100, 70, 30), "OK"))      //ЕСЛИ ПРИНИМААЕМ, ТО ОТПРАВЛЯЕМ СЕЛЕКТ МЭП НАВЕРХ, 
                 {
-                    dig_c.create_new_dig(select_map,go_zone);
+                    if (mode == "Dig")
+                    {
+                        dig_c.create_new_dig(select_map, go_zone);
+                    }
+                    else
+                    {
+                        store_c.create_new_store(select_map, go_zone);
+                    }
+                    //все чистим
+                    active = false;
+                    begin_plan = false;
+                    Destroy(select_zone);
+                    no_visible_select_go();
+
                 }
-                else
+                if (GUI.Button(new Rect(86, 100, 70, 30), "CANCEL"))
                 {
-                    store_c.create_new_store(select_map,go_zone);
+                    //все чистим
+                    active = false;
+                    begin_plan = false;
+                    Destroy(select_zone);
+                    no_visible_select_go();
                 }
-                //все чистим
-                active = false;
-                begin_plan = false;             
-                Destroy(select_zone);   
-                no_visible_select_go();
-              
+
             }
-            if (GUI.Button(new Rect(86, 100, 70, 30), "CANCEL"))
-            {  
-                //все чистим
-                active = false;
-                begin_plan = false;
-                Destroy(select_zone);
-                no_visible_select_go(); 
-            }    
         }
     }
 

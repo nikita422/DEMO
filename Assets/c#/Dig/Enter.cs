@@ -33,7 +33,6 @@ public class Enter : MonoBehaviour {
       void create_enter()
     {
         Vector2 pos = camera_to_arr(transform.position);
-        
         //print("create_enter");
         map.delete_block((int)pos.x+2,(int)pos.y);
         map.delete_block((int)pos.x + 3, (int)pos.y);

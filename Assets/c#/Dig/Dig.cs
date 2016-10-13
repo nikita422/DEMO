@@ -34,14 +34,15 @@ public class Dig : MonoBehaviour {
         desrtoy_stack = new List<Vector3>(desrtoy_stackk);
         where_desrtoy_stack = new List<Vector3>(where_desrtoyy);
         dig_enter = dig_enterr;
-        where_desrtoy_stack.RemoveAt(count - 1);
+        where_desrtoy_stack.RemoveAt(where_desrtoy_stack.Count - 1);
+         
     }
    
     public Vector3 what_destroy_next()
     {
         //print("what_desrtoy_next");
         count++;
-
+       
         if (desrtoy_stack.Count < count) {
 
             for (int i = 0; i < worker.Count; i++)
@@ -49,9 +50,9 @@ public class Dig : MonoBehaviour {
                 worker[i].set_dig(null);
             }
             Destroy(this.gameObject);
+            
         }
-        return desrtoy_stack[count];
-        
+        return desrtoy_stack[count];    
     }
     public Vector3  where_desrtoy()
     {         

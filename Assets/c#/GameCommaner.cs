@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class GameCommaner : MonoBehaviour {
+using UnityEngine.EventSystems;
+
+public class GameCommaner : MonoBehaviour
+{
     public GameObject pref_enter;
     public int toolbar_mode = 0;
     public int toolbar_block = 0;
@@ -41,16 +44,19 @@ public class GameCommaner : MonoBehaviour {
         //mousep = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //int_mousep = camera_to_arr(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         is_mouse_in_button();
+
         
-
-
-        if (toolbar_mode==0)//CREATE
+        
+            if (toolbar_mode==0)//CREATE
         {
             unitselecomp.enabled = false;
             
             if (Input.GetMouseButtonDown(0) && !mouse_in_button)
             {
-                now_press = true;
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    now_press = true;
+                }
             }
             if (Input.GetMouseButtonDown(1) && !mouse_in_button)//CREATE
             {
@@ -105,6 +111,7 @@ public class GameCommaner : MonoBehaviour {
         if (toolbar_mode == 0)
         {
             toolbar_block = GUI.Toolbar(new Rect(10, 70, 150, 20), toolbar_block, toolbarblock);
+           
         }
         if (toolbar_mode == 2)
         {

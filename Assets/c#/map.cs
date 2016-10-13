@@ -74,8 +74,9 @@ public class map : MonoBehaviour {
         {   
             Vector2 pos = new Vector2(Size * arr_to_camera(arr_x, arr_y).x, Size * arr_to_camera(arr_x, arr_y).y);
             GameObject ground = Instantiate(Pref_Dirt, pos, Quaternion.identity) as GameObject;
+             
             //  ground.transform.parent =GameObject.Find("back").transform;
-           // ground.GetComponent<TextMesh>().text = "123123";
+            // ground.GetComponent<TextMesh>().text = "123123";
             go_dirt[arr_x, arr_y] = ground;   
 
         }
@@ -110,6 +111,38 @@ public class map : MonoBehaviour {
             Destroy(go_dirt[arr_x, arr_y]);
         }
     }
+
+
+
+    public Vector2 where_can(Vector2 pos)
+    {
+        int x, y;
+        x =(int) pos.x;
+        y = (int)pos.y;
+        if (go_dirt[x - 1, y] == null)
+        {
+            if (go_dirt[x - 1, y - 1] !=null || go_dirt[x - 1, y + 1] != null) return new Vector3(x - 1, y);
+        }
+        if (go_dirt[x, y + 1] == null)
+        {
+            if (go_dirt[x - 1, y + 1] != null || go_dirt[x + 1, y + 1] != null) return new Vector3(x, y + 1);
+        }
+        if (go_dirt[x + 1, y] == null)
+        {
+            if (go_dirt[x + 1, y - 1] != null || go_dirt[x + 1, y + 1] != null) return new Vector3(x + 1, y);
+        }
+        if (go_dirt[x, y - 1] == null)
+        {
+            if (go_dirt[x - 1, y - 1] != null || go_dirt[x + 1, y - 1] != null) return new Vector3(x, y - 1);
+        }
+        return new Vector2(0, 0);
+    }
+
+
+
+
+
+
     public Vector3 arr_to_camera(int arr_x,int arr_y){
 
         Vector3 cam_vec = new Vector3();
@@ -118,6 +151,7 @@ public class map : MonoBehaviour {
         return cam_vec;
 
     }
+
 
    
 }
